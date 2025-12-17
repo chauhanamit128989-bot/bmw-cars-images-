@@ -24,7 +24,7 @@
     width: 140px;
 }
 .logo {
-    background-image: url(images/logo.png);
+    background-image: url(logo.png);
     background-size: contain;
     background-repeat: no-repeat;
     height: 60px;
@@ -367,3 +367,4 @@ span {
 
 
     
+
