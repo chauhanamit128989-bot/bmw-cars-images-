@@ -364,7 +364,16 @@ span {
     color: #777;
     font-weight: 600;
 }
+.gallery-img {
+  transition: filter 0.4s ease;
+}
+
+.gallery-img.loaded {
+  filter: blur(0);
+}
+
 
 
     
+
 
