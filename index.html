@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BMWSnaps.com</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="bmw wallpaper 4k for pc, bmw images hd, bmw m series, bmw suv, bmw wallpaper for laptop, bmw images download">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #0a0a0a;
+            border-bottom: 1px solid #1e1e1e;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 24px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+            white-space: nowrap;
+        }
+        .logo span { color: #1c69d4; }
+
+        .search {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            background: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 420px;
+        }
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 9px 14px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .search-input::placeholder { color: #555; }
+        .search-icon {
+            padding: 9px 14px;
+            color: #555;
+            cursor: pointer;
+        }
+        .search-icon:hover { color: #1c69d4; }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+        .login-btn {
+            background: transparent;
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 8px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .login-btn:hover { border-color: #1c69d4; color: #1c69d4; }
+
+        .submit-btn {
+            background: #1c69d4;
+            border: none;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .submit-btn:hover { background: #1557b8; }
+
+        /* CATEGORY TABS */
+        .tabs {
+            display: flex;
+            gap: 0;
+            padding: 0 24px;
+            border-bottom: 1px solid #1e1e1e;
+            overflow-x: auto;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #666;
+            padding: 13px 22px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: #ccc; }
+        .tab-btn.active {
+            color: #fff;
+            border-bottom-color: #1c69d4;
+        }
+
+        /* HERO SLIDER */
+        .hero-section {
+            position: relative;
+            height: 340px;
+            overflow: hidden;
+            background: #111;
+        }
+        .hero-section.hidden { display: none; }
+
+        .slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.75;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #333;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+        .slider-btn:hover { background: #1c69d4; border-color: #1c69d4; }
+        .slider-btn.prev { left: 16px; }
+        .slider-btn.next { right: 16px; }
+
+        /* PAGE CONTENT */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .page-title {
+            padding: 28px 24px 12px;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        .page-title span { color: #1c69d4; }
+
+        /* GRID */
+        .content-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 3px;
+            padding: 3px;
+        }
+
+        .box {
+            overflow: hidden;
+            aspect-ratio: 16/10;
+            background: #111;
+            cursor: pointer;
+            position: relative;
+        }
+        .box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease, opacity 0.3s;
+            display: block;
+        }
+        .box:hover img {
+            transform: scale(1.05);
+            opacity: 0.85;
+        }
+        .box .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        .box:hover .overlay {
+            background: rgba(0,0,0,0.3);
+            opacity: 1;
+        }
+        .box .overlay i {
+            font-size: 28px;
+            color: #fff;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #0d0d0d;
+            border-top: 1px solid #1e1e1e;
+            padding: 40px 24px 24px;
+            margin-top: 40px;
+        }
+        .footer h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .tagline {
+            color: #777;
+            font-size: 14px;
+            max-width: 480px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        .tagline span {
+            color: #fff;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .icons {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #161616;
+            border: 1px solid #2a2a2a;
+            transition: border-color 0.2s;
+        }
+        .icons a:hover { border-color: #1c69d4; }
+        .icons img { width: 20px; height: 20px; object-fit: contain; }
+        .copyright {
+            color: #444;
+            font-size: 13px;
+        }
+        .copyright a { color: #1c69d4; text-decoration: none; }
+        .copyright a:hover { text-decoration: underline; }
+
+        /* LIGHTBOX */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox.open { display: flex; }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        @media (max-width: 600px) {
+            .hero-section { height: 220px; }
+            .page-title { font-size: 20px; }
+            .content-section { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="navbar">
+        <div class="logo">BMW<span>Snaps</span>.com</div>
+        <div class="search">
+            <input placeholder="Search BMW photos…" class="search-input" id="searchInput">
+            <div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+        </div>
+        <div class="nav-right">
+            <button class="login-btn">Login</button>
+            <button class="submit-btn">Submit an Image</button>
+        </div>
+    </div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('wallpapers', this)">BMW Wallpapers</button>
+        <button class="tab-btn" onclick="switchTab('mseries', this)">BMW M Series</button>
+        <button class="tab-btn" onclick="switchTab('suv', this)">BMW SUV</button>
+    </div>
+</header>
+
+<!-- HERO SLIDER (Wallpapers only) -->
+<div class="hero-section" id="heroSlider">
+    <div class="slides" id="slideTrack">
+        <div class="slide"><img src="slidshow.jpg" alt="BMW Wallpaper" loading="lazy"></div>
+        <div class="slide"><img src="slid 1.jpg" alt="BMW Wallpaper" loading="lazy"></div>
+        <div class="slide"><img src="slid 2.jpg" alt="BMW Wallpaper" loading="lazy"></div>
+        <div class="slide"><img src="slid 3.jpg" alt="BMW Wallpaper" loading="lazy"></div>
+        <div class="slide"><img src="slid 4.jpg" alt="BMW Wallpaper" loading="lazy"></div>
+        <div class="slide"><img src="slid 5.jpg" alt="BMW Wallpaper" loading="lazy"></div>
+        <div class="slide"><img src="slid 6.jpg" alt="BMW Wallpaper" loading="lazy"></div>
+    </div>
+    <button class="slider-btn prev" onclick="changeSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="slider-btn next" onclick="changeSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+
+<!-- PAGE: WALLPAPERS -->
+<div class="page active" id="page-wallpapers">
+    <h1 class="page-title">Explore Our <span>BMW Collection</span></h1>
+    <div class="content-section" id="grid-wallpapers">
+        <!-- images injected by JS -->
+    </div>
+</div>
+
+<!-- PAGE: M SERIES -->
+<div class="page" id="page-mseries">
+    <h1 class="page-title">Explore Our <span>BMW M Series</span> Collection</h1>
+    <div class="content-section" id="grid-mseries"></div>
+</div>
+
+<!-- PAGE: SUV -->
+<div class="page" id="page-suv">
+    <h1 class="page-title">Explore <span>BMW SUV</span> Collection</h1>
+    <div class="content-section" id="grid-suv"></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <h3>BMW Car Collection</h3>
+    <p class="tagline"><span>About</span>We showcase the latest and premium BMW car collections with details and high-quality visuals.</p>
+    <div class="icons">
+        <div class="instagram"><a href="https://www.instagram.com/_amit_rajput_700/" target="_blank"><img src="instagram.png" alt="Instagram"></a></div>
+        <div class="facebook"><a href="#"><img src="facebook.png" alt="Facebook"></a></div>
+        <div class="youtube"><a href="#"><img src="yotube.gif" alt="YouTube"></a></div>
+        <div class="whatsapp"><a href="tel:+919274335356"><img src="whatsapp.gif" alt="WhatsApp"></a></div>
+    </div>
+    <p class="copyright">© 2025 BMWSnaps.com | Images courtesy of <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a></p>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open')">×</button>
+    <img id="lightboxImg" src="" alt="BMW">
+</div>
+
+<script>
+// ── Image Data ──────────────────────────────────────────────
+const images = {
+    wallpapers: [
+        "angelica-levshakowa-BdbtxvfiAHE-unsplash.jpg",
+        "archivio-automobile-shIgATgH_Zo-unsplash.jpg",
+        "archivio-automobile-ph0dI5MN-Gg-unsplash.jpg",
+        "alex-dorcioman-Mlxqo9b0J4A-unsplash.jpg",
+        "archivio-automobile-ugHK9StGR28-unsplash.jpg",
+        "damian-ochrymowicz-CSuPtVN167g-unsplash.jpg",
+        "devon-janse-van-rensburg-2h3UGhof_fU-unsplash.jpg",
+        "eloy-carrasco-8TiC__MqXsc-unsplash.jpg",
+        "georgi-kalaydzhiev-1NnyueLx1aw-unsplash.jpg",
+        "jakob-rosen--Db-eClK4vE-unsplash.jpg",
+        "jakob-rosen-rC1Llibcis0-unsplash.jpg",
+        "jon-koop-khYVyHiNZo0-unsplash.jpg",
+        "joren-goessens-3HtpbdeZ_i8-unsplash.jpg",
+        "leon-seibert-1RiyAwNIiew-unsplash.jpg",
+        "luca-david-BV9rakxVvQQ-unsplash.jpg",
+        "martin-katler-gWAFuadPY1g-unsplash.jpg",
+        "martin-katler-iaIeB11kyQE-unsplash.jpg",
+        "martin-katler-v81h3l0gFHU-unsplash.jpg",
+        "mathew-antony-kqGKNOTDz34-unsplash.jpg",
+        "noir-CXlzXn-2CVs-unsplash.jpg",
+        "philipp-katzenberger-hrpYtJv-BRs-unsplash.jpg",
+        "rodan-can-6cqJPeTIuls-unsplash.jpg",
+        "roman-khripkov-PzCGId2ljsY-unsplash.jpg",
+        "ruslan-mingazhov-bVLbGAyoWMM-unsplash.jpg",
+        "serjan-midili-a-fQdjpcL38-unsplash.jpg",
+        "serjan-midili-uHJ8sgM36Gs-unsplash.jpg",
+        "slid 1.jpg","slid 2.jpg","slid 3.jpg","slid 4.jpg","slid 5.jpg","slid 6.jpg",
+        "sunder-muthukumaran-K8ZtyTUCuPI-unsplash.jpg",
+        "sunder-muthukumaran-ZzxH-0Dbq_M-unsplash.jpg",
+        "the-graphic-space-21cn1VCl_u0-unsplash.jpg",
+        "the-graphic-space-hVpJ-EeIkUo-unsplash.jpg",
+        "the-graphic-space-lYK8o4q3NPI-unsplash.jpg",
+        "the-graphic-space-rTMTVNiM3DA-unsplash.jpg",
+        "tyler-clemmensen-wLpTPp2dzsY-unsplash.jpg",
+        "volodymyr-proskurovskyi-Gj65Pxd3IVo-unsplash.jpg",
+        "vullnet-ademaj-I1NJt02lsok-unsplash.jpg"
+    ],
+    mseries: [
+        "abdullah-malik-fP6PL4We5yM-unsplash.jpg",
+        "ali-mahmoudi-ac8TyBxlzwU-unsplash.jpg",
+        "amir-hosseini-CHVaY08VOIs-unsplash.jpg",
+        "amir-hosseini-x7uU-rCEpvw-unsplash.jpg",
+        "andreas-oberdammer-kYZToTBvQiY-unsplash.jpg",
+        "andres-grijalva-2loi44U-SjA-unsplash.jpg",
+        "andres-grijalva-6qjUMOtkS28-unsplash.jpg",
+        "angelica-levshakowa-iazeILPeUkk-unsplash.jpg",
+        "archivio-automobile-0cTvMZHuVZE-unsplash.jpg",
+        "devon-janse-van-rensburg-4mh4JLuFies-unsplash.jpg",
+        "devon-janse-van-rensburg-aJYOPvkDqOA-unsplash.jpg",
+        "devon-janse-van-rensburg-cQHx11ku1Dk-unsplash.jpg",
+        "devon-janse-van-rensburg-cTCYujspoLs-unsplash.jpg",
+        "eloy-carrasco-6kjIKYQgyxY-unsplash.jpg",
+        "erwi-zSg81PGkaXE-unsplash.jpg",
+        "eugene-tkachenko-xTbW23R8N3g-unsplash.jpg",
+        "ghumakkad-harshal-SfPmJtWPiM4-unsplash.jpg",
+        "ivan-kazlouskij-LBA-XAEttVQ-unsplash.jpg",
+        "ivan-kazlouskij-NMIjuxf2ks0-unsplash.jpg",
+        "ivan-kazlouskij-Qu4npTV812k-unsplash.jpg",
+        "jakob-rosen-rC1Llibcis0-unsplash (1).jpg",
+        "jakob-rosen-rC1Llibcis0-unsplash (2).jpg",
+        "joao-alves-HLoRWCDA_Co-unsplash.jpg",
+        "joey-nitsche-HU2d91fD9q0-unsplash.jpg",
+        "jorge-simmons-valenzuela-qf7RRmPMV3Y-unsplash.jpg",
+        "jorge-simmons-valenzuela-UQ8Ob_FNgl0-unsplash.jpg",
+        "josh-berquist-_4sWbzH5fp8-unsplash.jpg",
+        "juan-rojas-H0ANJEk2r2A-unsplash.jpg",
+        "kenny-leys--SrJPFlOyqc-unsplash.jpg",
+        "kevin-schmid-KSqBqjP0yDA-unsplash.jpg",
+        "luca-crestini-9GPXdjI2cxQ-unsplash.jpg",
+        "luca-crestini-abWvNLR0LBQ-unsplash.jpg",
+        "luca-david-bQNlTbMcj64-unsplash.jpg",
+        "luca-david-BV9rakxVvQQ-unsplash (1).jpg",
+        "luka-tsikolia-ZLyzbhrfjMY-unsplash.jpg",
+        "mankaran-cheema-JdKiZbDjSos-unsplash.jpg",
+        "martin-katler-1ouLyK5oykg-unsplash.jpg",
+        "martin-katler-Djarq-Jgs2c-unsplash.jpg",
+        "martin-katler-e3gVocvZ-g0-unsplash.jpg",
+        "martin-katler-Sr9dLwS_kjs-unsplash.jpg",
+        "martin-katler-v81h3l0gFHU-unsplash (1).jpg",
+        "martin-katler-WCNGjNfakuc-unsplash.jpg",
+        "martin-katler-xO_wA_PEEOE-unsplash.jpg",
+        "mate-vanyek-PhYKxsiKKUQ-unsplash.jpg",
+        "mateo-zvTaHJJnIRY-unsplash.jpg",
+        "mathew-antony-1v3h32a49WI-unsplash.jpg",
+        "mathew-antony-7S7OWkauWsQ-unsplash.jpg",
+        "mathew-antony-9sTQG7kNk_4-unsplash.jpg",
+        "mathew-antony-bBWwU4eHrkM-unsplash.jpg",
+        "mathew-antony-bt1oVJ3CYGg-unsplash.jpg",
+        "mathew-antony-ndy3e2iF9nw-unsplash.jpg",
+        "mathew-antony-QZVGfAbepFc-unsplash.jpg",
+        "maxime-agnelli--YIBS7f1plY-unsplash.jpg",
+        "melt3d-works-DrZg4V-bduU-unsplash.jpg",
+        "moaaz-baig-G1ereZqhanA-unsplash.jpg",
+        "moaaz-baig-S3bxQ6iN2nE-unsplash.jpg",
+        "nitish-nayak-EztpEovV7t4-unsplash.jpg",
+        "ondrej-supitar-MkOB5R85MS0-unsplash.jpg",
+        "philipp-katzenberger-Y8-H19uSx-Y-unsplash.jpg",
+        "rodan-can-6cqJPeTIuls-unsplash (1).jpg",
+        "rui-alves-ntjAlEWDjRE-unsplash.jpg",
+        "samuel-hagger-5rxGjPWDD8c-unsplash.jpg",
+        "samuel-hagger-ibdigxM7KA4-unsplash.jpg",
+        "samuel-hagger-YbuDki8nADQ-unsplash.jpg",
+        "serjan-midili--lcZUS-b-80-unsplash.jpg",
+        "serjan-midili-0GYpDNQypV4-unsplash.jpg",
+        "serjan-midili-AExwwAQJ_Kw-unsplash.jpg",
+        "serjan-midili-B8pmrv_WkYU-unsplash (1).jpg",
+        "serjan-midili-Hjl6WPNNI_c-unsplash.jpg",
+        "thinh-do-YGeGFHCZIYI-unsplash.jpg","thinh-do-wkQtT5PC5wg-unsplash.jpg",
+        "thinh-do-fGUb9lB5d2o-unsplash.jpg","thinh-do-e3zOTkdGdr0-unsplash.jpg",
+        "thinh-do-6PST3_09FmU-unsplash.jpg",
+        "tim-meyer-zwr3mggXbZM-unsplash.jpg","tim-meyer-Z0ERhkemUqQ-unsplash.jpg",
+        "tim-meyer-4a1jGXkD4MY-unsplash.jpg",
+        "timo-altay-jKSojCw1zsc-unsplash.jpg","timo-altay-AWQhfWfou4Y-unsplash.jpg",
+        "timo-altay-ASRM6vJYmjs-unsplash.jpg",
+        "umar-gora-QhjGm_orN5U-unsplash.jpg",
+        "vadim-yefremov-10vXg3E_Lls-unsplash.jpg",
+        "volodymyr-proskurovskyi-asBVeqsWRJA-unsplash.jpg",
+        "xuan-s-gallery-z-xIVaVZ3Kk-unsplash.jpg","xuan-s-gallery-MUsXjjtpE08-unsplash.jpg",
+        "yu-gordon-ZyB7O7OdvKk-unsplash.jpg",
+        "yuvraj-singh-JJpnPI8Hpgo-unsplash.jpg",
+        "zieben-vh-ZTH40q3F-c8-unsplash.jpg","zieben-vh-w-8YqUh5B7Y-unsplash.jpg",
+        "zieben-vh-n-7xP00ySBQ-unsplash.jpg","zieben-vh-cyQgm2kh65U-unsplash.jpg",
+        "zieben-vh-8_pQQMc59BU-unsplash.jpg","zieben-vh-5C87ChWglMA-unsplash.jpg",
+        "zuka-zurabishvili-phLuyfqci3o-unsplash.jpg","zuka-zurabishvili-PBPUQNjK2p0-unsplash.jpg",
+        "zuka-zurabishvili-F-GmA_RfNcI-unsplash.jpg"
+    ],
+    suv: [
+        "archivio-automobile-ZjHvBT7uQB8-unsplash.jpg",
+        "cole-ankney-kTfghZt8-RE-unsplash.jpg",
+        "daniel-gutko-A7MJHIC-9U8-unsplash.jpg",
+        "daniel-gutko-gzE1lPQuQjM-unsplash.jpg",
+        "daniel-gutko-YdM97Vok33Y-unsplash.jpg",
+        "daniel-shapiro-yqX8VaL2oY4-unsplash.jpg",
+        "gleb-paniotov-ocnwXPLDGB4-unsplash.jpg",
+        "hakon-sataoen-OMR_J_PFOb0-unsplash.jpg",
+        "luke-schobert-HZeiWQj8UXw-unsplash.jpg",
+        "luke-schobert-VLSpIvZL4Ho-unsplash.jpg",
+        "maxence-ambert-8piId4_lpXA-unsplash.jpg",
+        "maxence-ambert-fD0rkipPNSs-unsplash.jpg",
+        "niklas-bischop-Bih-FhAzROE-unsplash.jpg",
+        "pavel-s-jcK8e7fxL-o-unsplash.jpg",
+        "philipp-katzenberger-Y8-H19uSx-Y-unsplash.jpg",
+        "serjan-midili-SaY7EkQMuBo-unsplash.jpg",
+        "shooting-tyre-goXANQJmXCI-unsplash.jpg",
+        "ye-massa-HolXACN3d8I-unsplash.jpg",
+        "yoab-anderson-oUq6LvZsD5Q-unsplash.jpg"
+    ]
+};
+
+// ── Build Grids ──────────────────────────────────────────────
+function buildGrid(category) {
+    const grid = document.getElementById('grid-' + category);
+    if (grid.children.length > 0) return; // already built
+    images[category].forEach(src => {
+        const box = document.createElement('div');
+        box.className = 'box';
+        box.innerHTML = `<img src="${src}" alt="BMW" loading="lazy" decoding="async">
+            <div class="overlay"><i class="fa-solid fa-expand"></i></div>`;
+        box.querySelector('img').addEventListener('click', () => openLightbox(src));
+        grid.appendChild(box);
+    });
+}
+
+buildGrid('wallpapers');
+
+// ── Tab Switching ────────────────────────────────────────────
+function switchTab(tab, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + tab).classList.add('active');
+    btn.classList.add('active');
+    document.getElementById('heroSlider').classList.toggle('hidden', tab !== 'wallpapers');
+    buildGrid(tab);
+    // Filter search if active
+    const q = document.getElementById('searchInput').value.trim().toLowerCase();
+    if (q) filterGrid(tab, q);
+}
+
+// ── Slider ───────────────────────────────────────────────────
+let slideIndex = 0;
+const total = document.querySelectorAll('.slide').length;
+
+function changeSlide(dir) {
+    slideIndex = (slideIndex + dir + total) % total;
+    document.getElementById('slideTrack').style.transform = `translateX(-${slideIndex * 100}%)`;
+}
+
+setInterval(() => changeSlide(1), 4000);
+
+// ── Lightbox ─────────────────────────────────────────────────
+function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(e) {
+    if (e.target === document.getElementById('lightbox')) {
+        document.getElementById('lightbox').classList.remove('open');
+    }
+}
+
+// ── Search / Filter ──────────────────────────────────────────
+document.getElementById('searchInput').addEventListener('input', function() {
+    const q = this.value.trim().toLowerCase();
+    const activeTab = document.querySelector('.tab-btn.active');
+    const tabName = activeTab ? activeTab.textContent.toLowerCase().replace('bmw ','').replace(' ','') : 'wallpapers';
+    const key = tabName === 'wallpapers' ? 'wallpapers' : tabName === 'mseries' ? 'mseries' : 'suv';
+    filterGrid(key, q);
+});
+
+function filterGrid(category, q) {
+    const grid = document.getElementById('grid-' + category);
+    grid.querySelectorAll('.box').forEach(box => {
+        const src = box.querySelector('img').src.toLowerCase();
+        box.style.display = (!q || src.includes(q)) ? '' : 'none';
+    });
+}
+</script>
+</body>
+</html>
